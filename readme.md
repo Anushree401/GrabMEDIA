@@ -32,12 +32,12 @@ python main.py [URL] [OPTIONS]
 
 ### Examples: 
 
-### Download a single video:
+#### Download a single video:
 ```bash
 python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos"
 ```
 
-### Download with 4 parallel threads:
+#### Download with 4 parallel threads:
 ```bash
 python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
 ```
