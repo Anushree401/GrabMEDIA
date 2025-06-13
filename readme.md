@@ -1,10 +1,12 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Video Downloader CLI Tool
 
 A command-line tool for downloading videos from YouTube and other platforms, with support for parallel downloads and format conversion.
 
-![Demo](demo.gif) *(Replace with actual screenshot/gif)*
+![Demo](![alt text](image-1.png)) 
 
-## Features
+## Features  
 
 - 🎥 **YouTube support** - Downloads videos and playlists
 - ⚡ **Multi-threaded** - Parallel downloads with configurable threads
@@ -63,3 +65,9 @@ No audio in downloads?
 
 DRM warnings?
 Try adding --ignore-errors to skip problematic videos.
+
+## 📦 Dependencies  
+This project uses:  
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) (Unlicense) - YouTube download engine  
+- [FFmpeg](https://ffmpeg.org/) (LGPL/GPL) - Video processing  
+- [tqdm](https://github.com/tqdm/tqdm) (MIT) - Progress bars  
