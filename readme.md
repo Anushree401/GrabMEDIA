@@ -1,12 +1,14 @@
+```markdown
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 # Video Downloader CLI Tool
 
 A command-line tool for downloading videos from YouTube and other platforms, with support for parallel downloads and format conversion.
 
-![Demo](![alt text](image-1.png)) 
+![Demo Screenshot](assets/demo.gif)
 
-## Features  
+## Features
 
 - 🎥 **YouTube support** - Downloads videos and playlists
 - ⚡ **Multi-threaded** - Parallel downloads with configurable threads
@@ -27,47 +29,60 @@ cd video-downloader
 
 # Install dependencies
 pip install -r requirements.txt
+```
 
 ## Usage
 
-python3 main.py [URL] [OPTIONS] 
+### Basic Command
+```bash
+python main.py [URL] [OPTIONS]
+```
 
-### Download a single video:
-python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos" 
+### Examples
+**Download a single video:**
+```bash
+python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos"
+```
 
-### Download with 4 parallel threads:
+**Download with 4 parallel threads:**
+```bash
 python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
+```
 
-## Options
-Flag	        Description	                             Default
--o,             --output	Output directory	        ./downloads
--t,             --threads	Parallel download threads	 2
+### Options
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-o`, `--output` | Output directory | `./downloads` |
+| `-t`, `--threads` | Parallel download threads | `2` |
 
 ## Known Issues
-
-    ⚠️ DRM-protected videos: Some YouTube content may not be downloadable due to DRM restrictions
-
-    📺 TV client formats: Certain formats may be skipped (see yt-dlp#12563)
-
-    🌐 Web client formats: Some formats may be missing (see yt-dlp#12482)
+- ⚠️ **DRM-protected videos**: Some YouTube content may not be downloadable due to DRM restrictions
+- 📺 **TV client formats**: Certain formats may be skipped (see [yt-dlp#12563](https://github.com/yt-dlp/yt-dlp/issues/12563))
+- 🌐 **Web client formats**: Some formats may be missing (see [yt-dlp#12482](https://github.com/yt-dlp/yt-dlp/issues/12482))
 
 ## Troubleshooting
 
-No audio in downloads?
+**No audio in downloads?**
+1. Verify FFmpeg is installed correctly:
+   ```bash
+   ffmpeg -version
+   ```
+2. Try different format combinations in `downloader.py`:
+   ```python
+   'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best'
+   ```
 
-    Verify FFmpeg is installed correctly
+**DRM warnings?**
+```bash
+python main.py [URL] --ignore-errors
+```
 
-    Try different format combinations:
-    python
+## Dependencies
+This project uses:
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) (Unlicense) - YouTube download engine
+- [FFmpeg](https://ffmpeg.org/) (LGPL/GPL) - Video processing
+- [tqdm](https://github.com/tqdm/tqdm) (MIT) - Progress bars
 
-    # In downloader.py
-    'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best'
-
-DRM warnings?
-Try adding --ignore-errors to skip problematic videos.
-
-## 📦 Dependencies  
-This project uses:  
-- [yt-dlp](https://github.com/yt-dlp/yt-dlp) (Unlicense) - YouTube download engine  
-- [FFmpeg](https://ffmpeg.org/) (LGPL/GPL) - Video processing  
-- [tqdm](https://github.com/tqdm/tqdm) (MIT) - Progress bars  
+## License
+[MIT](LICENSE)
+```
