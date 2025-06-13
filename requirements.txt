@@ -1,0 +1,13 @@
+# Core dependencies
+yt-dlp==2024.4.9           # YouTube/downloader engine
+requests==2.31.0           # HTTP requests
+tqdm==4.66.2               # Progress bars
+colorama==0.4.6            # Cross-platform colored terminal text
+
+# Optional but recommended
+ffmpeg-python==0.2.0       # FFmpeg wrapper (for advanced operations)
+mutagen==1.47.0            # Audio metadata handling
+pytest==8.1.1              # Testing framework (dev dependency)
+
+# Platform-specific (uncomment if needed)
+# pywin32==306 ; sys_platform == 'win32'  # Windows utilities

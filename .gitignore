@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+.venv/
+.env/
+
+# Build & distribution
+build/
+dist/
+*.egg-info/
+
+# Downloads & cache
+downloads/
+*.mp4
+*.temp
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# FFmpeg binaries (if bundled)
+ffmpeg-*/
