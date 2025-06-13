@@ -6,7 +6,7 @@
 
 A command-line tool for downloading videos from YouTube and other platforms, with support for parallel downloads and format conversion.
 
-![Demo Screenshot](assets/demo.gif)
+![Demo Screenshot](![alt text](image-2.png))
 
 ## Features
 
