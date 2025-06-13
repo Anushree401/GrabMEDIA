@@ -1,35 +1,45 @@
-```markdown
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-# Video Downloader CLI Tool
+
+## VIDEO DOWNLOADER CLI TOOL
 
 A command-line tool for downloading videos from YouTube and other platforms, with support for parallel downloads and format conversion.
 
-![Demo Screenshot](![alt text](image-2.png))
+## FEATURES:
+- YouTube support - Downloads videos and playlists
+- Multi-threaded - Parallel downloads with configurable threads
+- Audio preservation - Ensures audio tracks are properly merged
+- DRM handling - Warns about protected content
+- Custom output - Save to any directory
 
-## Features
+## INSTALLATION:
 
-- 🎥 **YouTube support** - Downloads videos and playlists
-- ⚡ **Multi-threaded** - Parallel downloads with configurable threads
-- 🔊 **Audio preservation** - Ensures audio tracks are properly merged
-- 🛡️ **DRM handling** - Warns about protected content
-- 📁 **Custom output** - Save to any directory
-
-## Installation
-
-### Prerequisites
+### Prerequisites:
 - Python 3.8+
 - FFmpeg (for format conversion)
 
-```bash
-# Clone repository
+### Installation commands:
 git clone https://github.com/yourusername/video-downloader.git
 cd video-downloader
-
-# Install dependencies
 pip install -r requirements.txt
-```
+
+## USAGE:
+
+### Basic command:
+python main.py [URL] [OPTIONS]
+![Demo](image.png)
+
+## Examples: 
+
+### Download a single video:
+python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos"
+
+### Download with 4 parallel threads:
+python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
+
+## OPTIONS:
+**Flag**          **Description**                     **Default**
+-o, --output        Output directory                  ./downloads
+-t, --threads       Parallel download threads          2
 
 ## Usage
 
