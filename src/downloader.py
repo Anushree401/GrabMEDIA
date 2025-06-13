@@ -25,7 +25,7 @@ import urllib.parse as urlparse
 import tqdm
 import os 
 from colorama import init, Fore
-from utils import format_size
+from .utils import format_size
 import yt_dlp
 import random
 import mimetypes

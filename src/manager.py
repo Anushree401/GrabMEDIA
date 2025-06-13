@@ -15,13 +15,12 @@ DownloadManager class
 
         start_all()
 '''
-from downloader import Downloader, YouTubeDownloader 
+from .downloader import Downloader, YouTubeDownloader 
 import threading
 import os
 from colorama import init, Fore
-from utils import is_youtube_url
+from .utils import is_youtube_url, get_file_type_from_url
 from concurrent.futures import ThreadPoolExecutor, as_completed 
-from utils import get_file_type_from_url 
 
 init(autoreset=True)
 
