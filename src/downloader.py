@@ -28,14 +28,20 @@ from colorama import init, Fore
 from utils import format_size
 import yt_dlp
 import random
+import mimetypes
+import threading
+import sys
+import time 
 
 init(autoreset=True)
 
 class Downloader:
-    def __init__(self, url, file=None):
+    def __init__(self, url, file=None, allowed_types=None):
         self.url = url
         self.file = file if file else self.get_filename()
         self.chunk_size = 1024 * 1024 # 1 MB max chunk size
+        self.paused = False
+        self.allowed_types = allowed_types
 
     def get_filename(self):
         parsed_url = urlparse.urlparse(self.url)
@@ -66,6 +72,19 @@ class Downloader:
         }
 
         return headers
+    
+    def listen_for_pause(self):
+        while True:
+            cmd = input().strip().lower()
+            if cmd == "p":
+                self.paused = True
+                print(f"{Fore.CYAN}[PAUSED] Download paused. Press 'r' to resume.")
+            elif cmd == "r":
+                self.paused = False
+                print(f"{Fore.GREEN}[RESUMED] Continuing download...")
+            elif cmd == "q":
+                print(f"{Fore.RED}[-] Quitting download.")
+                sys.exit()
 
     def download(self):
         response = ulib.urlopen(self.url) 
@@ -74,7 +93,6 @@ class Downloader:
         try:
             print(f"{Fore.YELLOW}[+] Content-Type of URL is : {response.headers['Content-Type']}") 
             content_type = response.headers['Content-Type'].lower()
-            import mimetypes
             file_ext = os.path.splitext(self.file)[1].lower()
             if not file_ext:
                 ext = mimetypes.guess_extension(content_type.split(';')[0].strip())
@@ -98,6 +116,7 @@ class Downloader:
                     response = ulib.urlopen(req)
                     remaining_size = int(response.headers.get('Content-Length', 0)) - existing_file_size
                     mode = "ab" if existing_file_size>0 else "wb"
+                    threading.Thread(target=self.listen_for_pause, daemon=True).start()
                     with open(self.file, mode) as f:
                         with tqdm.tqdm(
                             desc=self.file,
@@ -107,6 +126,8 @@ class Downloader:
                             unit_divisor=1024,
                         ) as bar:
                             for chunk in iter(lambda: response.read(self.chunk_size), b''):
+                                while self.paused:
+                                    time.sleep(0.5)
                                 f.write(chunk)
                                 bar.update(len(chunk))
                     print(f"{Fore.GREEN}[+] Downloaded video successfully as {self.file}")
@@ -122,7 +143,25 @@ class Downloader:
 
                     is_image = (content_type.startswith('image/') or 
                                 file_ext in image_extensions)
+                    
+                    is_audio = content_type.startswith('audio/')
 
+                    is_pdf = content_type == 'application/pdf'
+
+                    allowed = False
+
+                    if not self.allowed_types:
+                        allowed = True
+                    else:
+                        if "video" in self.allowed_types and is_video:
+                            allowed = True
+                        if "image" in self.allowed_types and is_image:
+                            allowed = True
+                        if "audio" in self.allowed_types and is_pdf:
+                            allowed = True 
+                    if not allowed:
+                        print(f"{Fore.RED}[-] Skipping download: type '{content_type}' not allowed by filters.")
+                        return
                     if not (is_video or is_image):
                         print(f"{Fore.YELLOW}[?] Unknown content type {content_type} - downloading anyway")
                 else:
@@ -133,9 +172,10 @@ class Downloader:
             print(f"{Fore.RED}[-] Error: {e}")
 
 class YouTubeDownloader(Downloader):
-    def __init__(self, url, output_dir='downloads'):
+    def __init__(self, url, output_dir='downloads', audio_only=False):
         super().__init__(url)
         self.output_dir = output_dir
+        self.audio_only = audio_only
     def download(self):
         class ProgressLogger:
             def __init__(self):
@@ -171,6 +211,15 @@ class YouTubeDownloader(Downloader):
                     'preferedformat': 'mp4'
                 }],
         }
+        if self.audio_only:
+            ydl_opts.update({
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec':'mp3',
+                    'preferredquality':'192',  
+                }],
+            })
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([self.url])

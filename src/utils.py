@@ -10,7 +10,10 @@ Utility functions (can be in a separate module)
         validate_url(url) 
 '''
 
-def is_youtube_url(url):
+import os
+import mimetypes
+
+def is_youtube_url(url): 
     return 'youtube.com' in url or 'youtu.be' in url
 
 def format_size(bytes):
@@ -29,3 +32,50 @@ def validate_url(url):
     if not url:
         raise ValueError("URL cannot be empty")
     return True
+
+def get_file_type_from_url(url):
+    filename = os.path.basename(url)
+    ext = os.path.splitext(filename)[1].lower()
+    extension_map = {
+            '.mp3': 'audio',
+            '.wav': 'audio',
+            '.aac': 'audio',
+            '.flac': 'audio',
+
+            '.mp4': 'video',
+            '.mkv': 'video',
+            '.webm': 'video',
+            '.avi': 'video',
+
+            '.jpg': 'image',
+            '.jpeg': 'image',
+            '.png': 'image',
+            '.gif': 'image',
+            '.bmp': 'image',
+            '.svg': 'image',
+
+            '.pdf': 'pdf',
+            '.doc': 'document',
+            '.docx': 'document',
+            '.txt': 'document',
+            '.ppt': 'document',
+            '.pptx': 'document',
+            '.xls': 'document',
+            '.xlsx': 'document',
+    }
+    if ext in extension_map:
+        return extension_map[ext]
+    
+    mime_type, _ = mimetypes.guess_type(filename)
+    if mime_type:
+        if mime_type.startswith('audio/'):
+            return 'audio'
+        elif mime_type.startswith('video/'):
+            return 'video'
+        elif mime_type.startswith('image/'):
+            return 'image'
+        elif mime_type == 'application/pdf':
+            return 'pdf'
+        elif mime_type.startswith('application/') or mime_type.startswith('text/'):
+            return 'document'
+    return 'other'

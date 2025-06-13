@@ -27,6 +27,19 @@ class CLI:
         self.parser.add_argument('urls', nargs='+', help='List of video URLs to download')
         self.parser.add_argument('--output', '-o', default='downloads', help='Output directory for downloaded files')
         self.parser.add_argument('--threads', '-t', type=int, default=4, help='Number of parallel download threads')
+        self.parser.add_argument(
+            '--types',
+            nargs='+',
+            choices=['audio', 'pdf', 'image', 'video'],
+            help='Allowed file types to download (e.g., audio pdf)'
+        )
+        self.parser.add_argument(
+            '--audio-only',
+            action='store_true',
+            help='Download only audio for YouTube videos'
+        )
+        self.allowed_types = self.args.types
+        self.yt_audio_only = self.args.audio_only
         self.args = self.parser.parse_args() # Parse command line arguments
         self.urls = self.args.urls # List of URLs to download 
         self.output_dir = self.args.output # Output directory for downloaded files
@@ -69,5 +82,11 @@ class CLI:
                 print(f"{Fore.CYAN}  [Direct] {url}")
         # Here you would typically call the download manager to start downloading
         # For example:
-        manager = DownloadManager(self.urls, self.output_dir, self.threads)
+        manager = DownloadManager(
+            self.urls,
+            output_dir=self.output_dir,
+            threads=self.threads,
+            allowed = self.allowed_types,
+            yt_audio_only = self.yt_audio_only 
+        )
         manager.start_all()
