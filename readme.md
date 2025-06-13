@@ -85,7 +85,7 @@ python main.py "https://download.samplelib.com/mp4/sample-5s.mp4" --types video 
 ![Audio Demo](tests/audio)
 
 ### 📹 YouTube Video (Audio-Only)
-![DYouTube Audio Demo](tests/yt_audio)
+![YouTube Audio Demo](tests/yt_audio)
 
 ## 🧩 Supported File Types
 
