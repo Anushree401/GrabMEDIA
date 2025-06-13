@@ -109,16 +109,14 @@ python main.py "https://download.samplelib.com/mp4/sample-5s.mp4" --types video 
 ## 🧯 Troubleshooting
 
 ### No audio in output file?
-
-    Ensure FFmpeg is installed:
+Ensure FFmpeg is installed:
 ```bash
 ffmpeg -version
 ```
-
-### Check the format settings in YouTubeDownloader (in downloader.py):
-   ```bash
-    'format': 'bestaudio+bestvideo/best'
-   ```
+Check the format settings in YouTubeDownloader (in downloader.py):
+```bash
+'format': 'bestaudio+bestvideo/best'
+```
 
 ## 📚 Dependencies
 
