@@ -73,19 +73,19 @@ python main.py "https://download.samplelib.com/mp4/sample-5s.mp4" --types video 
 ## 📸 Sample Output
 
 ### 🎥 Video File (MP4)
-![Demo](/tests/video)
+![Video Demo](tests/video)
 
 ### 📸 Image File (JPEG)
-![Demo](/tests/image)
+![Image Demo](tests/image)
 
 ### 📄 PDF Document
-![Demo](/tests/pdf)
+![PDF Demo](tests/pdf)
 
 ### 🎧 Audio File (MP3)
-![Demo](/tests/audio)
+![Audio Demo](tests/audio)
 
 ### 📹 YouTube Video (Audio-Only)
-![Demo](/tests/yt_audio)
+![DYouTube Audio Demo](tests/yt_audio)
 
 ## 🧩 Supported File Types
 
