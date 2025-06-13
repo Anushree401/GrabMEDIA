@@ -38,9 +38,9 @@ class CLI:
             action='store_true',
             help='Download only audio for YouTube videos'
         )
+        self.args = self.parser.parse_args() # Parse command line arguments
         self.allowed_types = self.args.types
         self.yt_audio_only = self.args.audio_only
-        self.args = self.parser.parse_args() # Parse command line arguments
         self.urls = self.args.urls # List of URLs to download 
         self.output_dir = self.args.output # Output directory for downloaded files
         self.threads = self.args.threads # Number of parallel download threads, thread means number of parallel downloads
