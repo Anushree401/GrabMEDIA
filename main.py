@@ -23,7 +23,15 @@ def main():
     print(f"{Fore.GREEN}=====Welcome to the File Downloader!=====")
     try:
         cli = CLI()  # Initialize the CLI interface
-        cli.run()  # Run the CLI to get user input and start downloads
+        args = cli.args
+        manager = DownloadManager(
+            urls=args.urls,
+            output_dir=args.output,
+            threads=args.threads,
+            allowed_types=args.types,
+            yt_audio_only=args.yt_audio_only
+        )
+        manager.start_all()
         print(f"{Fore.GREEN}=====File Downloader finished successfully!=====")
     except Exception as e:
         print(f"{Fore.RED}[-] Error: {e}")
