@@ -78,5 +78,4 @@ This project uses:
 - [tqdm](https://github.com/tqdm/tqdm) (MIT) - Progress bars
 
 ## License
-[MIT](LICENSE)
-```
+[MIT_LICENSE](LICENSE)
