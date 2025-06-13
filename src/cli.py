@@ -17,7 +17,7 @@ CLI class (optional but nice)
 import argparse
 from colorama import init, Fore
 from .manager import DownloadManager
-from utils import is_youtube_url, format_size, validate_url 
+from .utils import is_youtube_url, format_size, validate_url 
 
 init(autoreset=True)  # Initialize colorama for colored output
 
