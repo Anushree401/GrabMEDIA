@@ -39,9 +39,10 @@ python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos"
 python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
 
 ## OPTIONS:
-**Flag**          **Description**                     **Default**
--o, --output        Output directory                  ./downloads
--t, --threads       Parallel download threads          2
+|**Flag**     |  **Description**             |  **Default** |
+|-------------|------------------------------|--------------|
+|-o, --output |   Output directory           |  ./downloads |
+|-t, --threads|   Parallel download threads  |   2          |
 
 ## Usage
 
