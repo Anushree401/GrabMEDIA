@@ -26,6 +26,8 @@ pip install -r requirements.txt
 
 ### Basic command:
 python main.py [URL] [OPTIONS]
+
+### Sample output
 ![Demo](image.png)
 
 ## Examples: 
