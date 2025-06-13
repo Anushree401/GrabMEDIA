@@ -86,7 +86,7 @@ class CLI:
             self.urls,
             output_dir=self.output_dir,
             threads=self.threads,
-            allowed = self.allowed_types,
+            allowed_types=self.allowed_types,
             yt_audio_only = self.yt_audio_only 
         )
         manager.start_all()
