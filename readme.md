@@ -30,7 +30,7 @@ python main.py [URL] [OPTIONS]
 ### Sample output
 ![Demo](image.png)
 
-## Examples: 
+### Examples: 
 
 ### Download a single video:
 ```bash
