@@ -1,8 +1,8 @@
 
 
-## VIDEO DOWNLOADER CLI TOOL
+## GrabMEDIA
 
-A command-line tool for downloading videos from YouTube and other platforms, with support for parallel downloads and format conversion.
+A command-line tool for downloading videos and images from YouTube and other platforms, with support for parallel and multiple downloads.
 
 ## FEATURES:
 - YouTube support - Downloads videos and playlists
@@ -33,40 +33,26 @@ python main.py [URL] [OPTIONS]
 ## Examples: 
 
 ### Download a single video:
+```bash
 python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos"
+```
 
 ### Download with 4 parallel threads:
+```bash
 python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
+```
 
 ## OPTIONS:
 |**Flag**     |  **Description**             |  **Default** |
 |-------------|------------------------------|--------------|
 |-o, --output |   Output directory           |  ./downloads |
 |-t, --threads|   Parallel download threads  |   2          |
-
-## Usage
-
-### Basic Command
 ```bash
-python main.py [URL] [OPTIONS]
+python main.py "URL1" "URL2"  # Downloads one after another
 ```
-
-### Examples
-**Download a single video:**
 ```bash
-python main.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --output "~/Videos"
+python main.py "URL1" "URL2" "URL3" -t 3  # All 3 download simultaneously, faster
 ```
-
-**Download with 4 parallel threads:**
-```bash
-python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
-```
-
-### Options
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-o`, `--output` | Output directory | `./downloads` |
-| `-t`, `--threads` | Parallel download threads | `2` |
 
 ## Known Issues
 - ⚠️ **DRM-protected videos**: Some YouTube content may not be downloadable due to DRM restrictions
@@ -84,11 +70,6 @@ python main.py "https://youtu.be/example1" "https://youtu.be/example2" -t 4
    ```python
    'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best'
    ```
-
-**DRM warnings?**
-```bash
-python main.py [URL] --ignore-errors
-```
 
 ## Dependencies
 This project uses:
