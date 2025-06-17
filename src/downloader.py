@@ -171,59 +171,57 @@ class Downloader:
         except Exception as e:
             print(f"{Fore.RED}[-] Error: {e}")
 
+class ProgressLogger:
+            def __init__(self):
+                self.pbar = None
+            def hook(self,d):
+                if d['status'] == 'downloading':
+                    total = d.get('total_bytes') or d.get('total_bytes_estimate')
+                    if total and self.pbar is None:
+                        self.pbar = tqdm.tqdm(total=total, unit='B', unit_scale=True, desc=os.path.basename(d.get('filename', '')))
+                    if self.pbar:
+                        self.pbar.n = d.get('downloaded_bytes', 0)
+                        self.pbar.refresh()
+                elif d['status'] == 'finished':
+                    if self.pbar:
+                        self.pbar.n = self.pbar.total
+                        self.pbar.refresh()
+                        self.pbar.close()
+                        self.pbar = None
+
 class YouTubeDownloader(Downloader):
     def __init__(self, url, output_dir='downloads', audio_only=False):
         super().__init__(url)
         self.output_dir = output_dir
         self.audio_only = audio_only
-    def download(self):
-        class ProgressLogger:
-            def __init__(self):
-                self.pbar = None
-            def hook(self, d):
-                if d['status'] == 'downloading':
-                    total = d.get('total_bytes')
-                    downloaded = d.get('downloaded_bytes')
 
-                    if total is not None and downloaded is not None:
-                        if self.pbar is None:
-                            self.pbar = tqdm.tqdm(
-                                desc="Downloading",
-                                unit='B',
-                                unit_scale=True,
-                                unit_divisor=1024,
-                                total=total
-                            )
-                        self.pbar.n = downloaded
-                        self.pbar.refresh()
+    def download(self):
         progress = ProgressLogger()
-        ydl_opts = {
-            'outtmpl': os.path.join(self.output_dir, '%(title)s.%(ext)s'),
-            'format': 'bestaudio+bestvideo/best',
-            'merge_output_format': 'mp4',
-            'progress_hooks': [progress.hook],
-            'quiet': True,  # We handle output ourselves
-            'continue': True,
-            'nopart': False, # Enable partial downloads
-            #'ffmpeg_location': r'E:\Psnal\hecking\projects\tools\video downloader\ffmpeg-7.1.1-essentials_build\ffmpeg-7.1.1-essentials_build\bin\ffmpeg.exe',
-            'postprocessors': [{
-                    'key': 'FFmpegVideoConvertor',
-                    'preferedformat': 'mp4'
-                }],
-        }
+
         if self.audio_only:
-            ydl_opts.update({
+            ydl_opts = {
                 'format': 'bestaudio/best',
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec':'mp3',
-                    'preferredquality':'192',  
-                }],
-            })
+                'outtmpl': os.path.join(self.output_dir, '%(title)s.%(ext)s'),
+                'quiet': True,
+                'progress_hooks': [progress.hook],
+                'postprocessors': [
+                    {
+                        'key': 'FFmpegExtractAudio',
+                        'preferredcodec': 'mp3',
+                        'preferredquality': '192'
+                    }
+                ]
+            }
+        else:
+            ydl_opts = {
+                'format': 'best[ext=mp4]/best',
+                'outtmpl': os.path.join(self.output_dir, '%(title)s.%(ext)s'),
+                'quiet': True,
+                'progress_hooks': [progress.hook]
+            }
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([self.url])
-                print(f"{Fore.GREEN}[+] Downloaded YouTube video successfully to {self.output_dir}")
-                return 
+                print(f"{Fore.GREEN}[+] Downloaded YouTube content successfully to {self.output_dir}")
         except Exception as e:
             print(f"{Fore.RED}[-] YouTube download failed: {e}")
